@@ -1,16 +1,17 @@
 <script setup>
 import { useTheme } from 'vuetify'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import logo from '@images/logo.svg?raw'
+import logo from '@images/logo.jpg'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
+import { login } from '../auth'
+import { useRouter } from 'vue-router'
 
 const form = ref({
-  email: '',
+  username: '',
   password: '',
-  remember: false,
+  error: '',
 })
 
 const vuetifyTheme = useTheme()
@@ -19,7 +20,27 @@ const authThemeMask = computed(() => {
   return vuetifyTheme.global.name.value === 'light' ? authV1MaskLight : authV1MaskDark
 })
 
+const isLoggingIn = ref(false);
+
 const isPasswordVisible = ref(false)
+
+const router = useRouter()
+
+const handleLogin = async () => {
+  try {
+    isLoggingIn.value = true
+    form.value.error = ''
+
+    await login({ username: form.value.username, password: form.value.password })
+
+    // Redirect to dashboard or any other route upon successful login
+    router.push('/')
+  } catch (error) {
+    // Handle login error
+    isLoggingIn.value = false
+    form.value.error = error.message
+  }
+}
 </script>
 
 <template>
@@ -30,36 +51,30 @@ const isPasswordVisible = ref(false)
       class="auth-card pa-4 pt-7"
       max-width="448"
     >
-      <VCardItem class="justify-center">
+      <VCardItem class="justify-center mb-5">
         <template #prepend>
-          <div class="d-flex">
-            <div v-html="logo" />
+          <div class="d-flex logo">
+            <img :src="logo">
           </div>
         </template>
 
         <VCardTitle class="font-weight-semibold text-2xl text-uppercase">
-          Materio
+          CỔ PHỤC OANH TRỊNH
         </VCardTitle>
       </VCardItem>
 
-      <VCardText class="pt-2">
-        <h5 class="text-h5 font-weight-semibold mb-1">
-          Welcome to Materio! 👋🏻
-        </h5>
-        <p class="mb-0">
-          Please sign-in to your account and start the adventure
-        </p>
-      </VCardText>
-
       <VCardText>
-        <VForm @submit.prevent="() => {}">
+        <VForm @submit.prevent="handleLogin">
           <VRow>
+
+            <VAlert v-if="form.error" type="error" class="mb-5">{{ form.error }}</VAlert>
+
             <!-- email -->
             <VCol cols="12">
               <VTextField
-                v-model="form.email"
-                label="Email"
-                type="email"
+                v-model="form.username"
+                label="Tên đăng nhập"
+                type="text"
               />
             </VCol>
 
@@ -67,67 +82,27 @@ const isPasswordVisible = ref(false)
             <VCol cols="12">
               <VTextField
                 v-model="form.password"
-                label="Password"
+                label="Mật khẩu"
                 placeholder="············"
                 :type="isPasswordVisible ? 'text' : 'password'"
                 :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                class="mb-10"
               />
 
-              <!-- remember me checkbox -->
-              <div class="d-flex align-center justify-space-between flex-wrap mt-1 mb-4">
-                <VCheckbox
-                  v-model="form.remember"
-                  label="Remember me"
-                />
-
-                <a
-                  class="ms-2 mb-1"
-                  href="javascript:void(0)"
-                >
-                  Forgot Password?
-                </a>
-              </div>
+              <p v-if="isLoggingIn" class="text-center">
+                <VProgressCircular color="primary" indeterminate></VProgressCircular>
+              </p>
 
               <!-- login button -->
               <VBtn
                 block
                 type="submit"
-                to="/"
+                :disabled="isLoggingIn"
               >
-                Login
+                Đăng nhập
               </VBtn>
-            </VCol>
 
-            <!-- create account -->
-            <VCol
-              cols="12"
-              class="text-center text-base"
-            >
-              <span>New on our platform?</span>
-              <RouterLink
-                class="text-primary ms-2"
-                to="/register"
-              >
-                Create an account
-              </RouterLink>
-            </VCol>
-
-            <VCol
-              cols="12"
-              class="d-flex align-center"
-            >
-              <VDivider />
-              <span class="mx-4">or</span>
-              <VDivider />
-            </VCol>
-
-            <!-- auth providers -->
-            <VCol
-              cols="12"
-              class="text-center"
-            >
-              <AuthProvider />
             </VCol>
           </VRow>
         </VForm>

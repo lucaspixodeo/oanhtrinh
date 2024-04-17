@@ -6,10 +6,10 @@ import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
+import { register } from '../auth'
 
 const form = ref({
   username: '',
-  email: '',
   password: '',
   privacyPolicies: false,
 })
@@ -21,6 +21,18 @@ const authThemeMask = computed(() => {
 })
 
 const isPasswordVisible = ref(false)
+
+const handleRegister = async () => {
+  try {
+    await register({ username: form.value.username, password: form.value.password })
+
+    // Optionally, redirect the user to the login page after successful registration
+    console.log('Registration successful')
+  } catch (error) {
+    // Handle registration error
+    console.error('Registration failed:', error.message)
+  }
+}
 </script>
 
 <template>
@@ -53,7 +65,7 @@ const isPasswordVisible = ref(false)
       </VCardText>
 
       <VCardText>
-        <VForm @submit.prevent="() => {}">
+        <VForm @submit.prevent="handleRegister">
           <VRow>
             <!-- Username -->
             <VCol cols="12">
@@ -61,15 +73,6 @@ const isPasswordVisible = ref(false)
                 v-model="form.username"
                 label="Username"
                 placeholder="Johndoe"
-              />
-            </VCol>
-            <!-- email -->
-            <VCol cols="12">
-              <VTextField
-                v-model="form.email"
-                label="Email"
-                placeholder="johndoe@email.com"
-                type="email"
               />
             </VCol>
 
@@ -104,7 +107,6 @@ const isPasswordVisible = ref(false)
               <VBtn
                 block
                 type="submit"
-                to="/"
               >
                 Sign up
               </VBtn>

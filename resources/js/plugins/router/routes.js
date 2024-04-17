@@ -3,6 +3,7 @@ export const routes = [
   {
     path: '/',
     component: () => import('@/layouts/default.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
