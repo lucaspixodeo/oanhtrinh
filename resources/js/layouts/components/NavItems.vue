@@ -5,181 +5,145 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 </script>
 
 <template>
-  <!-- 👉 Dashboards -->
-  <VerticalNavGroup
+  <VerticalNavLink
     :item="{
-      title: 'Dashboards',
-      badgeContent: '5',
-      badgeClass: 'bg-error',
+      title: 'Thống kê',
       icon: 'ri-home-smile-line',
+      to: '/',
     }"
-  >
-    <VerticalNavLink
-      :item="{
-        title: 'Analytics',
-        to: '/dashboard',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'CRM',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/dashboards/crm',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'ECommerce',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/dashboards/ecommerce',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Academy',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/dashboards/academy',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Logistics',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/dashboards/logistics',
-        target: '_blank',
-        badgeContent: 'Pro',
-        badgeClass: 'bg-light-primary text-primary',
-      }"
-    />
-  </VerticalNavGroup>
+  />
 
-  <!-- 👉 Front Pages -->
-  <VerticalNavGroup
-    :item="{
-      title: 'Front Pages',
-      icon: 'ri-file-copy-line',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  >
-    <VerticalNavLink
-      :item="{
-        title: 'Landing',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/front-pages/landing-page',
-        target: '_blank',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Pricing',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/front-pages/pricing',
-        target: '_blank',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Payment',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/front-pages/payment',
-        target: '_blank',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Checkout',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/front-pages/checkout',
-        target: '_blank',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Help Center',
-        href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/front-pages/help-center',
-        target: '_blank',
-      }"
-    />
-  </VerticalNavGroup>
-
-  <!-- 👉 Apps & Pages -->
   <VerticalNavSectionTitle
     :item="{
-      heading: 'Apps & Pages',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Permissions',
-      icon: 'ri-lock-2-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/apps/permissions',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Email',
-      icon: 'ri-mail-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/apps/email',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Chat',
-      icon: 'ri-wechat-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/apps/chat',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
-    }"
-  />
-  <VerticalNavLink
-    :item="{
-      title: 'Calendar',
-      icon: 'ri-calendar-line',
-      href: 'https://demos.themeselection.com/materio-vuetify-vuejs-laravel-admin-template/demo-1/apps/calendar',
-      target: '_blank',
-      badgeContent: 'Pro',
-      badgeClass: 'bg-light-primary text-primary',
+      heading: 'Kinh doanh',
     }"
   />
 
-  <VerticalNavLink
+  <VerticalNavGroup
     :item="{
-      title: 'Account Settings',
-      icon: 'ri-user-settings-line',
-      to: '/account-settings',
+      title: 'Sản phẩm',
+      icon: 'ri-shirt-line',
+    }"
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Thêm sản phẩm',
+        icon: 'ri-add-circle-line',
+        to: '/product/add',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Tất cả sản phẩm',
+        icon: 'ri-file-list-3-line',
+        to: '/product/list',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <VerticalNavGroup
+    :item="{
+      title: 'Phân loại',
+      icon: 'ri-mist-line',
+    }"
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Thêm loại',
+        icon: 'ri-add-circle-line',
+        to: '/category/add',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Tất cả các loại',
+        icon: 'ri-file-list-3-line',
+        to: '/category/list',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <VerticalNavGroup
+    :item="{
+      title: 'Đơn hàng',
+      icon: 'ri-shopping-cart-line',
+    }"
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Tạo đơn',
+        icon: 'ri-add-circle-line',
+        to: '/order/add',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Tất cả đơn',
+        icon: 'ri-file-list-3-line',
+        to: '/order/list',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <VerticalNavSectionTitle
+    :item="{
+      heading: 'Quản lý',
     }"
   />
 
-  <VerticalNavLink
+  <VerticalNavGroup
     :item="{
-      title: 'Login',
-      icon: 'ri-login-box-line',
-      to: '/login',
+      title: 'Nhân viên',
+      icon: 'ri-user-line',
     }"
-  />
-  <VerticalNavLink
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Thêm nhân viên',
+        icon: 'ri-user-add-line',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Tất cả nhân viên',
+        icon: 'ri-file-list-3-line',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <VerticalNavGroup
     :item="{
-      title: 'Register',
-      icon: 'ri-user-add-line',
-      to: '/register',
+      title: 'Ca làm việc',
+      icon: 'ri-time-line',
     }"
-  />
-  <VerticalNavLink
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Thống kê ca NViên',
+        icon: 'ri-line-chart-line',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Tính lương NViên',
+        icon: 'ri-money-dollar-circle-line',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <VerticalNavGroup
     :item="{
-      title: 'Error',
-      icon: 'ri-information-line',
-      to: '/no-existence',
+      title: 'Thu chi',
+      icon: 'ri-refund-2-line',
     }"
-  />
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Thêm khoản chi',
+        icon: 'ri-add-circle-line',
+      }"
+    />
+  </VerticalNavGroup>
 
   <!-- 👉 User Interface -->
   <VerticalNavSectionTitle

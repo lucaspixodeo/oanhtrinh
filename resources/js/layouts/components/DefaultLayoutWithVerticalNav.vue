@@ -1,6 +1,6 @@
 <script setup>
 import NavItems from '@/layouts/components/NavItems.vue'
-import logo from '@images/logo.svg?raw'
+import logo from '@images/logo.jpg'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
 import Footer from '@/layouts/components/Footer.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
@@ -62,13 +62,10 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         to="/"
         class="app-logo app-title-wrapper"
       >
-        <div
-          class="d-flex"
-          v-html="logo"
-        />
+        <img :src="logo" width="40" height="40" class="rounded-circle" />
 
         <h1 class="font-weight-medium leading-normal text-xl text-uppercase">
-          Materio
+          CP Oanh Trịnh
         </h1>
       </RouterLink>
 

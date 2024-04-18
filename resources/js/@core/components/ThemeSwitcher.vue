@@ -13,14 +13,17 @@ const {
   global: globalTheme,
 } = useTheme()
 
+globalTheme.name.value = localStorage.getItem('theme') || themeName.value
+
 const {
   state: currentThemeName,
   next: getNextThemeName,
   index: currentThemeIndex,
-} = useCycleList(props.themes.map(t => t.name), { initialValue: themeName })
+} = useCycleList(props.themes.map(t => t.name), { initialValue: globalTheme.name.value })
 
 const changeTheme = () => {
   globalTheme.name.value = getNextThemeName()
+  localStorage.setItem('theme', globalTheme.name.value)
 }
 
 // Update icon if theme is changed from other sources

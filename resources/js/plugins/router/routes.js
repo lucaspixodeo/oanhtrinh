@@ -33,6 +33,45 @@ export const routes = [
         path: 'form-layouts',
         component: () => import('@/pages/form-layouts.vue'),
       },
+      {
+        path: '/product/',
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/pages/product/add.vue'),
+          },
+          {
+            path: 'list',
+            component: () => import('@/pages/product/index.vue'),
+          },
+        ],
+      },
+      {
+        path: '/category/',
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/pages/category/add.vue'),
+          },
+          {
+            path: 'list',
+            component: () => import('@/pages/category/index.vue'),
+          },
+        ],
+      },
+      {
+        path: '/order/',
+        children: [
+          {
+            path: 'add',
+            component: () => import('@/pages/order/add.vue'),
+          },
+          {
+            path: 'list',
+            component: () => import('@/pages/order/index.vue'),
+          },
+        ],
+      },
     ],
   },
   {

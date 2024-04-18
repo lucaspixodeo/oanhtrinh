@@ -5,9 +5,17 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const logout = () => {
-  localStorage.clear()
+  localStorage.removeItem('token')
+  localStorage.removeItem('tokenExpiration')
+  localStorage.removeItem('user')
   router.push('/login')
 }
+
+const currentUser = ref(null)
+
+onMounted(() => {
+  currentUser.value = JSON.parse(localStorage.getItem('user'))
+})
 </script>
 
 <template>
@@ -55,28 +63,15 @@ const logout = () => {
               </VListItemAction>
             </template>
 
-            <VListItemTitle class="font-weight-semibold">
-              John Doe
+            <VListItemTitle class="font-weight-semibold text-capitalize">
+              {{ currentUser?.name }}
             </VListItemTitle>
-            <VListItemSubtitle>Admin</VListItemSubtitle>
+            <VListItemSubtitle class="text-capitalize">{{ currentUser?.role == 'admin' ? 'Quản trị viên' : 'Nhân viên' }}</VListItemSubtitle>
           </VListItem>
           <VDivider class="my-2" />
 
-          <!-- 👉 Profile -->
-          <VListItem link>
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="ri-user-line"
-                size="22"
-              />
-            </template>
-
-            <VListItemTitle>Profile</VListItemTitle>
-          </VListItem>
-
           <!-- 👉 Settings -->
-          <VListItem link>
+          <VListItem link to="/account-settings">
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -85,33 +80,7 @@ const logout = () => {
               />
             </template>
 
-            <VListItemTitle>Settings</VListItemTitle>
-          </VListItem>
-
-          <!-- 👉 Pricing -->
-          <VListItem link>
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="ri-money-dollar-circle-line"
-                size="22"
-              />
-            </template>
-
-            <VListItemTitle>Pricing</VListItemTitle>
-          </VListItem>
-
-          <!-- 👉 FAQ -->
-          <VListItem link>
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="ri-question-line"
-                size="22"
-              />
-            </template>
-
-            <VListItemTitle>FAQ</VListItemTitle>
+            <VListItemTitle>Cài đặt</VListItemTitle>
           </VListItem>
 
           <!-- Divider -->
@@ -127,7 +96,7 @@ const logout = () => {
               />
             </template>
 
-            <VListItemTitle>Logout</VListItemTitle>
+            <VListItemTitle>Đăng xuất</VListItemTitle>
           </VListItem>
         </VList>
       </VMenu>
