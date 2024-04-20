@@ -9,6 +9,13 @@ use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
+    function list (Request $request)
+    {
+        return response()->json([
+            'data' => Category::orderBy('name', 'asc')->get(),
+        ]);
+    }
+
     function create(Request $request)
     {
         try {

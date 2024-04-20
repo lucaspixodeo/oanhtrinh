@@ -1,36 +1,25 @@
 <script setup>
+import { runAjax } from '@/helpers'
+import { useToast } from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
+
+const $toast = useToast()
 const name = ref('')
 const description = ref('')
 const errors = ref(null)
 
 const handleSubmit = async () => {
-  try {
-    const token = localStorage.getItem('token')
-
-    const response = await fetch('/api/category/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        name: name.value,
-        description: description.value,
-      }),
+  runAjax('/api/category/create', 'POST', {
+    name: name.value,
+    description: description.value,
+  })
+    .then(() => {
+      resetForm()
+      $toast.success('Thêm loại thành công!')
     })
-
-    if (!response.ok) {
-      const errorData = await response.json()
-
-      errors.value = Object.assign({}, errorData.errors)
-      throw new Error(errorData.message || 'Create category failed')
-    }
-
-    resetForm()
-
-  } catch (error) {
-    console.error('Create category failed:', error)
-  }
+    .catch(response => {
+      errors.value = Object.assign({}, response.errors)
+    })
 }
 
 const resetForm = () => {

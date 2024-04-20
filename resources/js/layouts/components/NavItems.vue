@@ -21,6 +21,28 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 
   <VerticalNavGroup
     :item="{
+      title: 'Đơn hàng',
+      icon: 'ri-shopping-cart-line',
+    }"
+  >
+    <VerticalNavLink
+      :item="{
+        title: 'Tạo đơn',
+        icon: 'ri-add-circle-line',
+        to: '/order/add',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
+        title: 'Tất cả đơn',
+        icon: 'ri-file-list-3-line',
+        to: '/order/list',
+      }"
+    />
+  </VerticalNavGroup>
+
+  <VerticalNavGroup
+    :item="{
       title: 'Sản phẩm',
       icon: 'ri-shirt-line',
     }"
@@ -59,28 +81,6 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
         title: 'Tất cả các loại',
         icon: 'ri-file-list-3-line',
         to: '/category/list',
-      }"
-    />
-  </VerticalNavGroup>
-
-  <VerticalNavGroup
-    :item="{
-      title: 'Đơn hàng',
-      icon: 'ri-shopping-cart-line',
-    }"
-  >
-    <VerticalNavLink
-      :item="{
-        title: 'Tạo đơn',
-        icon: 'ri-add-circle-line',
-        to: '/order/add',
-      }"
-    />
-    <VerticalNavLink
-      :item="{
-        title: 'Tất cả đơn',
-        icon: 'ri-file-list-3-line',
-        to: '/order/list',
       }"
     />
   </VerticalNavGroup>

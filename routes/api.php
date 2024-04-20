@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('category')->group(function () {
+        Route::get('list', [CategoryController::class, 'list']);
         Route::post('create', [CategoryController::class, 'create']);
     });
 });

@@ -43,8 +43,8 @@ export async function login(credentials) {
 
     const data = await response.json()
 
-    // Calculate expiration time (600 minutes from now)
-    const expirationTime = Date.now() + (600 * 60 * 1000) // 60 minutes in milliseconds
+    // Calculate expiration time (10 hours from now)
+    const expirationTime = Date.now() + (10 * 60 * 60 * 1000) // 10 hours in milliseconds
 
     // Store authentication token or user data in local storage
     localStorage.setItem('token', data.token)
