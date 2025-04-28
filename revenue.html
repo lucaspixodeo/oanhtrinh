@@ -1,0 +1,123 @@
+<input type="file" id="csvFileInput" accept=".csv" />
+<canvas id="revenueChart" style="width: 100%; height: 90vh;"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+<script>
+document.getElementById('csvFileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    try {
+      const text = event.target.result;
+      const data = parseCSV(text);
+      const chartData = calculateMonthlyRevenue(data);
+      renderChart(chartData);
+    } catch (err) {
+      alert('Lỗi khi đọc file CSV: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
+function parseCSV(text) {
+  const rows = text.trim().split('\n').map(row => row.split(','));
+  const headers = rows[0];
+  const data = rows.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((header, i) => {
+      const key = header ? header.trim() : '';
+      const val = row[i];
+      obj[key] = val ? val.trim() : '';
+    });
+    return obj;
+  });
+  return data;
+}
+
+function calculateMonthlyRevenue(data) {
+  const monthly = {};
+
+  data.forEach(entry => {
+    const date = new Date(entry['inputDate'].replace('/', '-'));
+    if (isNaN(date)) return;
+
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const amount = parseFloat(entry['amount(dong)']);
+    if (isNaN(amount)) return;
+
+    if (!monthly[month]) monthly[month] = {};
+    if (!monthly[month][year]) monthly[month][year] = 0;
+    monthly[month][year] += amount;
+  });
+
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const years = Array.from(new Set(Object.values(monthly).flatMap(obj => Object.keys(obj)))).sort();
+
+  const datasets = years.map(year => ({
+    label: year,
+    backgroundColor: getColorForYear(year),
+    data: months.map((_, m) => monthly[m]?.[year] ? +monthly[m][year] : null)
+  }));
+
+  return { labels: months, datasets };
+}
+
+function getColorForYear(year) {
+  const colors = {
+    2023: '#FFC107',
+    2024: '#2196F3',
+    2025: '#4CAF50'
+  };
+  return colors[year] || '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+let chartInstance;
+function renderChart({ labels, datasets }) {
+  const ctx = document.getElementById('revenueChart').getContext('2d');
+
+  if (chartInstance) chartInstance.destroy();
+
+  chartInstance = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels,
+      datasets
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          ticks: {
+            beginAtZero: true,
+            callback: function(value) {
+              return value ? value.toLocaleString('en-US') + ' tr' : '';
+            }
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Revenue (VND, tr)'
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Month'
+          }
+        }]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            const value = tooltipItem.xLabel;
+            return value ? (data.datasets[tooltipItem.datasetIndex].label + ': ' + value.toLocaleString('en-US') + ' tr') : '';
+          }
+        }
+      }
+    }
+  });
+}
+</script>
